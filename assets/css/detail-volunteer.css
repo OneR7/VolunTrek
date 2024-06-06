@@ -1,0 +1,68 @@
+.card-img-top {
+    height: 350px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.custom-logo {
+    height: 30px;
+    margin-left: 20px;
+}
+
+.col-7 {
+    margin-left: 50px;
+}
+
+.card-text {
+    text-align: left;
+    background-color: rgb(237, 237, 234);
+    padding: 10px 10px 10px;
+}
+
+.relawan {
+    margin-left: 70px;
+}
+
+h6 {
+    text-align: left;
+}
+
+.metode {
+    text-align: left;
+}
+
+.kanan {
+    text-align: left;
+    padding: 30px 50px 20px;
+}
+/* 
+.logoseru {
+    color: red;
+} */
+
+.btn-warning, .btn-success {
+    width: 320px;
+}
+
+.bi-person-add, .bi-envelope-arrow-up-fill {
+    margin-right: 5px;
+}
+
+.btn-primary {
+    width: 103px;
+}
+
+.facebook {
+    background-color: #428BCA;
+    border: none;
+}
+
+.twitter {
+    background-color: #31B0D5;
+    border: none;
+}
+
+.whatsapp {
+    background-color: #449D44;
+    border: none;
+}

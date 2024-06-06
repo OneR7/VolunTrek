@@ -1,0 +1,111 @@
+body {
+    font-family: poppins;
+    font-size: 14px;
+    background-color: #DDDAEA;
+    margin: 0;
+    padding: 0;
+    /* background: url('purple.jpg') no-repeat center center fixed; */
+    background-size: cover;
+    margin: 0;
+    padding: 50px;
+}
+
+:root {
+    --ff-quicksand: "Quicksand", sans-serif;
+    --ff-mulish: "Mulish", sans-serif;
+
+}
+
+
+
+.container {
+    max-width: 1000px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+label {
+    width: 90%;
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    display: block;
+    /* Memastikan bahwa elemen label adalah blok */
+}
+
+input {
+    width: 90%;
+    min-height: 50px;
+    /* Atur sesuai kebutuhan */
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    display: block;
+    /* Memastikan bahwa elemen input adalah blok */
+    resize: vertical;
+}
+
+textarea {
+    width: 90%;
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    display: block;
+    height: auto;
+    /* Atur tinggi ke auto agar dapat berkembang sesuai konten */
+    resize: vertical;
+    /* Memastikan bahwa textarea hanya bisa diubah tingginya secara vertikal */
+}
+
+.areaberita {
+    width: 90%;
+    height: 100px;
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    display: block;
+    resize: vertical;
+}
+
+.submit {
+    width: 90%;
+    height: 50px;
+    padding: 10px;
+    margin: 0 auto;
+    justify-content: center;
+    display: block;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #551e8f;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.judul {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    color: #551e8f;
+    margin-bottom: 0;
+}
+
+.desc {
+    text-align: center;
+    font-size: 15px;
+    color: 000000;
+    margin-top: 0;
+}

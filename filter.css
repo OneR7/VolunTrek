@@ -1,0 +1,39 @@
+body {
+    background-color: aquamarine;
+}
+.popup {
+    width: 500px;
+    position: fixed;
+    border-radius: 6px;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    background-color: white;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+    padding: 20px 25px 15px
+}
+
+.open-popup {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-close {
+    font-size: 12px;
+}
+
+.form-label {
+    font-size: 15px;
+}
+
+select.form-select option[selected] {
+    color: #8b8181;
+}
+
+button.buttonfilter {
+    width: 70px;
+    border-radius: 3px;
+}
+

@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root{
+    --header-height: 3.5rem;
+
+    /*========== Colors ==========*/
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --hijau-muda: rgb(65, 100, 74);
+    --hijau-tua:rgb(38, 58, 41);
+    --orange:rgb(232, 106, 51);
+    --cream:rgb(243, 242, 241);
+    --body-color: rgb(255, 255, 255);
+    --container-color: rgb(29, 32, 34);
+  
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px | 1rem = 16px ...*/
+    --title-font: 'Merriweather', serif;
+    --body-font: 'Poppins', sans-serif;
+    --biggest-font-size: 2.25rem;
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1rem;
+    --normal-font-size: .938rem;
+    --small-font-size: .813rem;
+    --smaller-font-size: .75rem;
+  
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --font-semi-bold: 600;
+  
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+}
+
+@media screen and (min-width: 1024px) {
+    :root {
+      --biggest-font-size: 4rem;
+      --h1-font-size: 2.25rem;
+      --h2-font-size: 1.5rem;
+      --h3-font-size: 1.25rem;
+      --normal-font-size: 1rem;
+      --small-font-size: .875rem;
+      --smaller-font-size: .813rem;
+    }
+}
+
+/*=============== BASE ===============*/
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: var(--body-font);
+    font-style: var(--title-font);
+    font-size: var(--normal-font-size);
+    background-color: var(--body-color);
+    color: var(--text-color);
+    transition: background 0.4s; /* for dark mode animation */
+  }
+
+  .background-image {
+    position:relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: url('./login.jpg'); */
+    background-size: cover;
+    z-index: 1;
+}
+  
+  h1, h2, h3 {
+    font-weight: var(--font-medium);
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+    max-width: 100%;
+   /* margin-inline: 1.5rem; */
+  }
+  
+  .main {
+    overflow: hidden; /* For the animations */
+  }
+  .grid{
+    display: grid;
+  }
+  .flex{
+    display: flex;
+  }
+
+/*============= Login =================*/
+.login__container{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--cream);
+    height: 100vh;
+}
+.login__left{
+    height: 250px;
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5))
+    , url('./assets/images/login.png') ;
+    opacity: 100%;
+    background-size: cover;
+    background-position: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight:bolder;
+    margin-bottom: 2rem;
+}
+.login__left img{
+    width: 80px;
+    padding-bottom: 1rem;
+}
+.login__left h1,.lr__header h1{
+    font-family: var(--title-font);
+}
+.login__left p{
+    text-align: center;
+}
+.login__right{
+    padding-top: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+}
+.lr__header{
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1.5rem;
+}
+.lr__header h1{
+    font-weight: 600;
+    color: black
+}
+.lr__header p{
+    padding-top: .8rem;
+    color: black;
+}
+.lr__input{
+    flex-direction: column;
+    align-items: center;
+}
+.input__box{
+    align-items: center;
+    padding-bottom: 1rem;
+    font-size: 1.5rem;
+    color: hsl(245, 67%, 59%);
+}
+.input__box i{
+    position: absolute;
+    color: black;
+}
+.input__box input{
+    outline: none;
+    border: none;
+    padding: .8rem 4rem .8rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--first-color);
+    background: none;
+    border-bottom: 3px solid black;
+  }
+  .input__box input:focus,
+  .input__box input:valid{
+    border-color: black;
+  }
+  .forgot{
+    padding-bottom: 1rem;
+    color: black;
+  }
+  .log__in,.sign__in{
+    display: block;
+    padding: .8rem 1.5rem;
+    border-radius: .5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    width: 300px;
+    color: white;
+    background: hsl(245, 67%, 59%);
+    cursor: pointer;
+    transition: background .3s;
+  }
+  .sign__in{
+      margin-top: 2rem;
+  }
+  .log__in input,.sign__in input{
+    display: flex;
+    justify-content: center;
+    border: none;
+    background: none;
+  }
+  .text__sign-up{
+    padding-top: .5rem;
+  }
+  .text__login{
+      padding-top: .5rem;
+  }
+  .reg__now,.log__now{
+    color: hsl(245, 67%, 59%);
+    font-weight: 500;
+  }
+
+
+/*==========================SIGN======================*/
+@media screen and (min-width: 1024px) {
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .login__container{
+      flex-direction: row;
+      height: 100vh;
+      margin-bottom: 0;
+    }
+    .login__left,.login__right{
+      display: flex;
+      width: 50%;
+      height: auto;
+      margin-bottom: 0;
+    }
+    .login__right{
+        justify-content: center;
+    }
+    
+  }
