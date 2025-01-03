@@ -49,7 +49,7 @@ if ($q !== "") {
     if ($isUsernameUsed) {
         echo "Username telah digunakan";
     } else {
-        echo "Username tersedia";
+        echo "Username bisa digunakan";
     }
 } else {
     echo "Username tidak boleh kosong";

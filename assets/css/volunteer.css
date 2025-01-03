@@ -293,13 +293,56 @@ body { background: var(--white); }
 
 .project .section-text { margin-block-end: 50px; }
 
+/* Menambahkan ukuran tetap untuk kartu proyek */
 .project-card {
-background-color: var(--white_a);
-border-radius: var(--radius-8);
-overflow: hidden;
-box-shadow: var(--shadow-2);
-height: 100%;
+  background-color: var(--white_a);
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
+/* Menambahkan ukuran tetap untuk gambar di dalam kartu proyek */
+.project-card .card-banner {
+  flex: 0 0 auto;
+}
+
+.project-card .card-banner img {
+  width: 100%;
+  height: 200px; /* Sesuaikan dengan kebutuhan Anda */
+  object-fit: cover;
+}
+
+/* Menambahkan ukuran tetap untuk konten di dalam kartu proyek */
+.project-card .card-content {
+  flex: 1 1 auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Menambahkan ukuran tetap untuk bagian bawah konten */
+.project-card .project-content-bottom {
+  padding-top: 20px;
+  border-top: 1px solid hsla(0, 0%, 0%, 0.1);
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+/* Menambahkan ukuran tetap untuk daftar proyek */
+.project .grid-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Pastikan semua kartu memiliki ukuran yang sama */
+}
+
 
 .card-banner img:hover{
 transform: scale(1.04);

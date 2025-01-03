@@ -178,7 +178,7 @@
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
-          &copy; 2024 <a href="">|| All Rights Reserved by PAA 10 Universitas Jember</a>
+          &copy; 2023 <a href="">|| All Rights Reserved by PWeb 7A Universitas Jember</a>
         </p>
       </div>
     </div>

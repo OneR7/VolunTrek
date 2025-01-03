@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $successMessage = "Berita berhasil ditambahkan";
 
-        header("location: admin-tampilan-berita.php");
+        header("location: admin-berita.php");
         exit;
 
     } while (false);
@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VolunTrek - Add Berita</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/svg+xml">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -65,23 +66,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
 
-        <form method="post">
+        <form id="beritaForm" method="post">
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Judul berita</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="judulberita" value="<?php echo $judul; ?>">
+                    <input type="text" class="form-control" name="judulberita" id="judulberita" value="<?php echo $judul; ?>">
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Deskripsi berita</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="deskripsiberita" value="<?php echo $deskripsi; ?>">
+                    <input type="text" class="form-control" name="deskripsiberita" id="deskripsiberita" value="<?php echo $deskripsi; ?>">
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Link gambar</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="linkgambar" value="<?php echo $image; ?>">
+                    <input type="text" class="form-control" name="linkgambar" id="linkgambar" value="<?php echo $image; ?>">
                 </div>
             </div>
 
@@ -105,12 +106,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 <div class="col-sm-3 d-grid">
-                    <a class="btn btn-outline-primary" href="admin-tampilan-berita.php" role="button">Cancel</a>
+                    <a class="btn btn-outline-primary" href="admin-berita.php" role="button">Cancel</a>
                 </div>
             </div>
         </form>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('api_admin-berita.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('judulberita').value = data.judul;
+                    document.getElementById('deskripsiberita').value = data.deskripsi;
+                    document.getElementById('linkgambar').value = data.image;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

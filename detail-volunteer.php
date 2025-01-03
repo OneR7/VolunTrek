@@ -1,35 +1,41 @@
 <?php
-require_once 'connection.php';
-
 $volunteerId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Fetch berita details from the database
-$sql2 = "SELECT * FROM volunteer 
-        INNER JOIN status ON volunteer.status_id_status = status.id_status
-        INNER JOIN fakultas ON volunteer.fakultas_id_fakultas = fakultas.id_fakultas
-        INNER JOIN tipe_kegiatan ON volunteer.tipe_kegiatan_tipe_kegiatan_id = tipe_kegiatan.id_tipe
-        WHERE id_volunteer = $volunteerId ";
-$result = $conn->query($sql2);
+// Fetch data from the external API
+$api_url = "http://localhost/voluntrek_coba/api_volunteer.php?id_volunteer=$volunteerId";
+$api_response = file_get_contents($api_url);
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $nama_kegiatan = $row['nama_kegiatan'];
-    $nama_penyelenggara = $row['nama_penyelenggara'];
-    $image = $row['image'];
-    $tanggal_kegiatan = $row['tanggal_kegiatan'];
-    $link_pendaftaran = $row['link_pendaftaran'];
-    $deskripsi = $row['deskripsi'];
-    $keterangan = $row['keterangan'];
-    $nama_status = $row['nama_status'];
-    $nama_fakultas = $row['nama_fakultas'];
-    $nama_tipe = $row['nama_tipe'];
-    $cp = $row['cp'];
+// Check if the API request was successful
+if ($api_response !== false) {
+    // Decode the JSON response
+    $responseData = json_decode($api_response, true);
+
+    // Check if the API returned volunteer data
+    if (isset($responseData['nama_kegiatan'])) {
+        // Assign data to variables
+        $nama_kegiatan = $responseData['nama_kegiatan'];
+        $nama_penyelenggara = $responseData['nama_penyelenggara'];
+        $image = $responseData['image'];
+        $tanggal_kegiatan = $responseData['tanggal_kegiatan'];
+        $link_pendaftaran = $responseData['link_pendaftaran'];
+        $deskripsi = $responseData['deskripsi'];
+        $keterangan = $responseData['keterangan'];
+        $nama_status = $responseData['nama_status'];
+        $nama_fakultas = $responseData['nama_fakultas'];
+        $nama_tipe = $responseData['nama_tipe'];
+        $cp = $responseData['cp'];
+    } else {
+        // Redirect to an error page or handle as needed
+        header("Location: error.php");
+        exit();
+    }
 } else {
     // Redirect to an error page or handle as needed
     header("Location: error.php");
     exit();
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">

@@ -1,28 +1,57 @@
 <?php
 require_once 'connection.php';
+session_start();
 
-$sql = "SELECT * FROM berita ORDER BY id_berita DESC LIMIT 3";
-$berita_result = $conn->query($sql);
+// Function to check if the user is logged in as admin
+function isAdmin() {
+    return isset($_SESSION['email']) && $_SESSION['email'] === 'admin@gmail.com';
+}
 
 // Get berita ID from the URL
 $beritaId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Ambil berita details from the database
-$sql2 = "SELECT * FROM berita WHERE id_berita = $beritaId";
-$result = $conn->query($sql2);
+if ($beritaId > 0) {
+    // Initialize cURL session
+    $ch = curl_init();
 
-if ($result->num_rows > 0) {
-  $row = $result->fetch_assoc();
-  $judul = $row['judul'];
-  $deskripsi = $row['deskripsi'];
-  $image = $row['image'];
+    // Set the URL and other options
+    curl_setopt($ch, CURLOPT_URL, "http://localhost/voluntrek_coba/api_admin-berita.php?id_berita=$beritaId");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    // Execute the cURL session
+    $response = curl_exec($ch);
+
+    // Check for cURL errors
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+        exit();
+    }
+
+    // Close the cURL session
+    curl_close($ch);
+
+    // Decode the JSON response
+    $data = json_decode($response, true);
+
+    if ($data && isset($data['id_berita'])) {
+        $judul = htmlspecialchars($data['judul']);
+        $deskripsi = htmlspecialchars($data['deskripsi']);
+        $image = htmlspecialchars($data['image']);
+    } else {
+        // Redirect to an error page or handle as needed
+        header("Location: error.php");
+        exit();
+    }
 } else {
-  // Redirect to an error page or handle as needed
-  header("Location: error.php");
-  exit();
+    // Redirect to an error page or handle as needed
+    header("Location: error.php");
+    exit();
 }
-?>
 
+// Get the latest news for the sidebar or other sections
+$sql = "SELECT * FROM berita ORDER BY id_berita DESC LIMIT 3";
+$berita_result = $conn->query($sql);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,9 +59,7 @@ if ($result->num_rows > 0) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Detail Berita -
-    <?php echo $judul; ?>
-  </title>
+  <title>Detail Berita - <?php echo $judul; ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="shortcut icon" href="./assets/images/favicon.png" type="image/svg+xml">
@@ -47,14 +74,18 @@ if ($result->num_rows > 0) {
 </style>
 
 <body>
-  <?php include "header.php"; ?>
+  <?php
+  if (isAdmin()) {
+      include "admin-header.php";
+  } else {
+      include "header.php";
+  }
+  ?>
   <div class="container">
     <div class="row align-items-start">
       <div class="col-2"></div>
       <div class="col-8">
-        <h1 style="font-size: 50px; margin-top: 160px">
-          <?php echo $judul; ?>
-        </h1>
+        <h1 style="font-size: 50px; margin-top: 160px"><?php echo $judul; ?></h1>
       </div>
       <div class="col-2"></div>
     </div>
@@ -126,25 +157,25 @@ if ($result->num_rows > 0) {
                   <div class="blog-card">
 
                     <figure class="blog-banner">
-                      <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['judul']; ?>">
+                      <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['judul']); ?>">
                     </figure>
 
                     <h3 class="blog-title">
-                      <?php echo $row['judul']; ?>
+                      <?php echo htmlspecialchars($row['judul']); ?>
                     </h3>
 
                     <p class="blog-text">
                       <?php
                       $deskripsi = $row['deskripsi'];
                       if (strlen($deskripsi) > 150) {
-                        echo substr($deskripsi, 0, 150) . '...';
+                        echo htmlspecialchars(substr($deskripsi, 0, 150)) . '...';
                       } else {
-                        echo $deskripsi;
+                        echo htmlspecialchars($deskripsi);
                       }
                       ?>
                     </p>
 
-                    <a href="#" class="blog-link-btn">
+                    <a href="detail-berita.php?id=<?php echo $row['id_berita']; ?>" class="blog-link-btn">
                       <span>Baca Selengkapnya</span>
 
                       <ion-icon name="chevron-forward-outline"></ion-icon>

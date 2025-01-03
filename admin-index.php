@@ -120,11 +120,7 @@ if (isset($_GET['id'])) {
                                             ?>
                                         </p>
 
-                                        <a href="#" class="blog-link-btn">
-                                            <span>Baca Selengkapnya</span>
-
-                                            <ion-icon name="chevron-forward-outline"></ion-icon>
-                                        </a>
+                                        <a href="detail-berita.php?id=<?php echo $row['id_berita']; ?>" class="blog-link-btn">Baca Selengkapnya<ion-icon name="chevron-forward-outline"></ion-icon></a>
 
                                     </div>
                                 </li>
@@ -225,7 +221,7 @@ if (isset($_GET['id'])) {
                                                     </time>
                                                 </div>
 
-                                                <a href="#" class="read-more-btn">Read More</a>
+                                                <a href="detail-volunteer.php?id=<?php echo $row['id_volunteer']; ?>" class="read-more-btn">Read More</a>
                                             </div>
 
                                         </div>

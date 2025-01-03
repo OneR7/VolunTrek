@@ -1,19 +1,19 @@
 <?php
-require_once 'connection.php';
-
-// Define the number of items per page
-$itemsPerPage = 9;
-
-// Get the current page number
+// Define the current page number
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-// Calculate the offset for the SQL query
-$offset = ($page - 1) * $itemsPerPage;
+// Call the external API to fetch news data
+$api_url = "http://localhost/voluntrek_coba/api_admin-berita.php?page=$page"; // Update URL accordingly
+$news_data = file_get_contents($api_url);
 
-$sql = "SELECT * FROM berita ORDER BY id_berita DESC
-        LIMIT $offset, $itemsPerPage";
-
-$berita_result = $conn->query($sql);
+// Check if API request was successful and data is retrieved
+if ($news_data !== false) {
+    // Decode the JSON response
+    $articles = json_decode($news_data, true);
+} else {
+    // Failed to fetch news data from the API
+    $articles = []; // Set articles to empty array
+}
 ?>
 
 
@@ -74,107 +74,43 @@ $berita_result = $conn->query($sql);
 </head>
 
 <body>
-  <?php include "header.php"; ?>
+    <?php include "header.php"; ?>
 
-  <main>
-    <article>
+    <main>
+        <article>
+            <section class="blog" id="blog">
+                <div class="container">
+                    <h2 class="h2 section-subtitle">Latest News</h2>
+                    <p class="section-text">Temukan berita volunteer Universitas Jember hanya di sini !!!!</p>
+                    <ul class="blog-list">
+                        <?php if (!empty($articles)) : ?>
+                            <?php foreach ($articles as $article) : ?>
+                                <li style="margin-bottom: 30px">
+                                    <div class="blog-card">
+                                        <figure class="blog-banner">
+                                            <img src="<?php echo $article['image']; ?>" alt="<?php echo $article['judul']; ?>">
+                                        </figure>
+                                        <h3 class="blog-title"><?php echo $article['judul']; ?></h3>
+                                        <p class="blog-text"><?php echo substr($article['deskripsi'], 0, 150) . '...'; ?></p>
+                                        <a href="detail-berita.php?id=<?php echo $article['id_berita']; ?>" class="blog-link-btn">
+                                            <span>Baca Selengkapnya</span>
+                                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                                        </a>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p>Tidak ada berita ditemukan</p>
+                        <?php endif; ?>
+                    </ul>
 
-      <!-- 
-        - BLOG 
-      -->
+                    <!-- Pagination remains the same -->
 
-      <section class="blog" id="blog">
-        <div class="container">
+                </div>
+            </section>
+        </article>
+    </main>
 
-          <h2 class="h2 section-subtitle">Latest News</h2>
-
-          <p class="section-text">
-            Temukan berita volunteer Universitas Jember hanya di sini !!!!
-          </p>
-
-          <ul class="blog-list">
-            <?php
-            if ($berita_result->num_rows > 0):
-              while ($row = $berita_result->fetch_assoc()):
-                ?>
-                <li style="margin-bottom: 30px">
-                  <div class="blog-card">
-
-                    <figure class="blog-banner">
-                      <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['judul']; ?>">
-                    </figure>
-
-                    <h3 class="blog-title">
-                      <?php echo $row['judul']; ?>
-                    </h3>
-
-                    <p class="blog-text">
-                      <?php
-                      $deskripsi = $row['deskripsi'];
-                      if (strlen($deskripsi) > 150) {
-                        echo substr($deskripsi, 0, 150) . '...';
-                      } else {
-                        echo $deskripsi;
-                      }
-                      ?>
-                    </p>
-
-                    <a href="detail-berita.php?id=<?php echo $row['id_berita']; ?>" class="blog-link-btn">
-                      <span>Baca Selengkapnya</span>
-
-                      <ion-icon name="chevron-forward-outline"></ion-icon>
-                    </a>
-
-                  </div>
-                </li>
-
-                <?php
-              endwhile;
-            else:
-              echo "<p>Tidak ada berita ditemukan</p>";
-            endif;
-            ?>
-
-          </ul>
-
-          <div class="pagination">
-            <?php
-            $sql = "SELECT COUNT(*) AS total FROM berita";
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            $totalPages = ceil($row['total'] / $itemsPerPage);
-
-            // Previous page link
-            if ($page > 1) {
-              echo '<a href="?page=' . ($page - 1) . '">&laquo;</a>';
-            }
-
-            // Numbered pagination links
-            for ($i = 1; $i <= $totalPages; $i++) {
-              echo '<a href="?page=' . $i . '"';
-              echo ($page == $i) ? ' class="active"' : '';
-              echo '>' . $i . '</a>';
-            }
-
-            // Next page link
-            if ($page < $totalPages) {
-              echo '<a href="?page=' . ($page + 1) . '">&raquo;</a>';
-            }
-            ?>
-          </div>
-
-        </div>
-      </section>
-
-    </article>
-  </main>
-
-  <?php include "footer.php"; ?>
+    <?php include "footer.php"; ?>
 </body>
-<!-- 
-    - ionicon link
--->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </html>

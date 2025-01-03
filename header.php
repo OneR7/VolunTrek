@@ -5,13 +5,13 @@ include 'connection.php'; // Include the database connection file
 // Function to check if a user is logged in
 function isLoggedIn()
 {
-  return isset($_SESSION["user"]);
+  return isset($_SESSION["username"]);
 }
 
 // Function to get the username if logged in
 function getUsername()
 {
-  return isLoggedIn() ? $_SESSION["user"] : "";
+  return isLoggedIn() ? $_SESSION["username"] : "";
 }
 ?>
 
@@ -100,8 +100,8 @@ function getUsername()
               <?php
               // Ambil nama admin dari database
               $sql = "SELECT nama FROM user WHERE email = 'admin@gmail.com'";
-              $result = mysqli_query($conn, $sql);
-              $user = mysqli_fetch_assoc($result);
+              $result = $conn->query($sql);
+              $user = $result->fetch(PDO::FETCH_ASSOC);
               $adminName = $user['nama'];
               ?>
               <span>
@@ -115,12 +115,12 @@ function getUsername()
               <a href="logout.php" class="header-action-link">Logout</a>
             <?php endif; ?>
           <?php else: ?>
-            <a href="loginUser.php" class="header-action-link">Log in</a>
-            <a href="register.php" class="header-action-link">Registrasi</a>
+            <a href="login.php" class="header-action-link">Log in</a>
+            <a href="registration.php" class="header-action-link">Registrasi</a>
           <?php endif; ?>
         </div>
 
-    </div>
+      </div>
   </header>
   <script src="./assets/js/header.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -140,3 +140,4 @@ function getUsername()
     });
   </script>
 </body>
+</html>

@@ -1,5 +1,24 @@
 <?php
-require_once 'connection.php';
+require_once 'connection.php'; // Include your database connection file
+require_once 'vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+$key = '6a8f2e4c923e46ff1e8fa10d8a0f8b4d2f5c3e78e0b1a25f8e2d3f4c5a6b7c8d';
+
+if (isset($_COOKIE['token'])) {
+    $token = $_COOKIE['token'];
+    try {
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    } catch (Exception $e) {
+        header('location:login.php');
+        exit;
+    }
+} else {
+    header('location:login.php');
+    exit;
+}
 
 $sql = "SELECT * FROM berita ORDER BY id_berita DESC LIMIT 3";
 $berita_result = $conn->query($sql);
@@ -69,7 +88,7 @@ $volunteer_result = $conn->query($sql2);
             </p>
 
             <div action="" class="title-wrapper">
-              <a href="loginUser.php" class="btn btn-primary">Join With Us</a>
+              <a href="login.php" class="btn btn-primary">Join With Us</a>
             </div>
           </div>
 
@@ -358,7 +377,7 @@ $volunteer_result = $conn->query($sql2);
           <div class="title-wrapper">
             <h2 class="h2 section-faq-title">Discover Frequently Asked Questions?</h2>
 
-            <a href="register.php" class="btn btn-primary">Work Together</a>
+            <a href="registration.php" class="btn btn-primary">Work Together</a>
           </div>
 
           <ul class="grid-list2">
